@@ -38,13 +38,6 @@ Graph::Graph(const String &title,const int16_t xlim_left,const int16_t xlim_righ
     drawXLabel(_xyparam.xlabel);
     drawYLabel(_xyparam.ylabel);
     
-    plot(0,0,BLUE);
-    plot(10,10,BLUE);
-    
-
-    //plot(x,y,3,BLUE);
-    scatter(50,50,YELLOW);
-    
 }
 
 void Graph::xlim(const int16_t left,const int16_t right){
@@ -66,7 +59,7 @@ void Graph::plot(const int x,const int y,const int16_t color,const String &legen
 
     if (_legend_plot[color].id==0){
         _legend_plot[color].maxid+=1;
-        _legend_plot[color].legend_ypos = _gframe.top +10*_legend_plot[color].maxid;
+        _legend_plot[color].legend_ypos = _gframe.top +14*_legend_plot[color].maxid;
         _legend_plot[color].before_x = _xyparam.xlim_left-1;
         _legend_plot[color].before_y = _xyparam.ylim_bottom-1;
         _legend_plot[color].name = legend_name;
@@ -114,7 +107,7 @@ void Graph::scatter(const int x,const int y,const int16_t color,const String &le
 
     if (_legend_scatter[color].id==0){
         _legend_scatter[color].maxid+=1;
-        _legend_scatter[color].legend_ypos = _gframe.top +10*_legend_scatter[color].maxid;
+        _legend_scatter[color].legend_ypos = _gframe.top +14*_legend_scatter[color].maxid;
         _legend_scatter[color].before_x = _xyparam.xlim_left-1;
         _legend_scatter[color].before_y = _xyparam.ylim_bottom-1;
         _legend_scatter[color].name = legend_name;
