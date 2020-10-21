@@ -38,11 +38,12 @@ Graph::Graph(const String &title,const int16_t xlim_left,const int16_t xlim_righ
     drawXLabel(_xyparam.xlabel);
     drawYLabel(_xyparam.ylabel);
     
-    plot(0,0,RED);
+    plot(0,0,BLUE);
+    plot(10,10,BLUE);
     
 
     //plot(x,y,3,BLUE);
-    //scatter(50,50,RED);
+    scatter(50,50,YELLOW);
     
 }
 
@@ -85,14 +86,7 @@ void Graph::plot(const int x,const int y,const int16_t color,const String &legen
         }
     }
 
-    {
-        M5.Lcd.setTextColor(color);
-        const auto xpos = _gframe.right-10;
-        const auto ypos = _legend_plot[color].legend_ypos;
-        const auto name = _legend_plot[color].name;
-        M5.Lcd.drawRightString(name,xpos,ypos,2);
-        M5.Lcd.setTextColor(WHITE);
-    }
+    drawLegendPlot(color);
 
     _legend_plot[color].before_x = x;
     _legend_plot[color].before_y = y;
@@ -130,16 +124,9 @@ void Graph::scatter(const int x,const int y,const int16_t color,const String &le
     uint16_t xpos = _gframe.left+(float)abs(_gframe.right-_gframe.left)/abs(_xyparam.xlim_right-_xyparam.xlim_left)*x;
     uint16_t ypos = _gframe.bottom-(float)abs(_gframe.top-_gframe.bottom)/abs(_xyparam.ylim_top-_xyparam.ylim_bottom)*y;
 
-    M5.Lcd.fillCircle(xpos,ypos,3,color);
+    M5.Lcd.fillCircle(xpos,ypos,5,color);
 
-    {
-        M5.Lcd.setTextColor(color);
-        const auto xpos = _gframe.right-10;
-        const auto ypos = _legend_scatter[color].legend_ypos;
-        const auto name = _legend_scatter[color].name;
-        M5.Lcd.drawRightString(name,xpos,ypos,2);
-        M5.Lcd.setTextColor(WHITE);
-    }
+    drawLegendScatter(color);
 
     _legend_scatter[color].before_x = x;
     _legend_scatter[color].before_y = y;
@@ -227,3 +214,28 @@ void Graph::drawYLabel(const String& ylabel){
     }
     
 }
+
+void Graph::drawLegendScatter(const uint16_t color){
+    M5.Lcd.setTextColor(color);
+    const auto xpos = _gframe.right-10;
+    const auto ypos = _legend_scatter[color].legend_ypos;
+    const auto name = _legend_scatter[color].name;
+    const auto w = name.length()*8;
+    const auto h = 15;
+    M5.Lcd.fillRect(xpos-w,ypos+3,w,h,BLACK);
+    M5.Lcd.drawRightString(name,xpos,ypos,2);
+    M5.Lcd.setTextColor(WHITE);
+}
+
+void Graph::drawLegendPlot(const uint16_t color){
+    M5.Lcd.setTextColor(color);
+    const auto xpos = _gframe.right-10;
+    const auto ypos = _legend_plot[color].legend_ypos;
+    const auto name = _legend_plot[color].name;
+    const auto w = name.length()*8;
+    const auto h = 15;
+    M5.Lcd.fillRect(xpos-w,ypos+3,w,h,BLACK);
+    M5.Lcd.drawRightString(name,xpos,ypos,2);
+    M5.Lcd.setTextColor(WHITE);
+}
+  

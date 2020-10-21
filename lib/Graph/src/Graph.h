@@ -29,7 +29,6 @@ struct GraphFrame{
   const uint16_t top = 0;
 };
 
-
 class Graph{
   struct Legend{
     uint8_t id;
@@ -47,15 +46,17 @@ class Graph{
   std::map<uint16_t,Legend> _legend_scatter;
   
   void drawFrame();
-  void drawXFrame(const uint8_t mode); // 1:Grid, 2: Ticks
-  void drawYFrame(const uint8_t mode); // 1:Grid, 2: Ticks
+  void drawXFrame(const uint8_t mode); // 1:Grid, 2: Ticks 3: both
+  void drawYFrame(const uint8_t mode); // 1:Grid, 2: Ticks 3: both
   void drawXLabel(const String& xlabel);
   void drawYLabel(const String& ylabel);
 
   void xlim(const int16_t left,const int16_t right);
   void ylim(const int16_t bottom,const int16_t top);
 
-  void legend();
+  void drawLegendScatter(const uint16_t color);
+  void drawLegendPlot(const uint16_t color);
+  
   public:
   Graph(GraphXYParam gxyp,GraphFrame gf);
   Graph(const String &title="no title",
