@@ -72,10 +72,10 @@ class Graph{
   ~Graph()=default;
 
   void plot(const int16_t x[],const int16_t y[],const uint16_t xy_bufsize,const int16_t color=RED,const String &legend_name="no name");
-  void plot(const int16_t x,const int16_t y,const int16_t color=RED,const String &legend_name="no name");
+  void plot(const int x,const int y,const int16_t color=RED,const String &legend_name="no name");
   
   void scatter(const int16_t x[],const int16_t y[],const uint16_t xy_bufsize,const int16_t color=RED,const String &legend_name="no name");
-  void scatter(const int16_t x,const int16_t y,const int16_t color=RED,const String &legend_name="no name");
+  void scatter(const int x,const int y,const int16_t color=RED,const String &legend_name="no name");
   
 };
 

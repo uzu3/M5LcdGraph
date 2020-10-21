@@ -21,7 +21,7 @@ Graph::Graph(const String &title,const int16_t xlim_left,const int16_t xlim_righ
     _xyparam.ylabel = "no ylabel";
     
     _xyparam.xlabel = "no xlabel";
-    
+
 
     drawFrame();
     if(write_grid&&wirte_ticks){
@@ -37,12 +37,13 @@ Graph::Graph(const String &title,const int16_t xlim_left,const int16_t xlim_righ
 
     drawXLabel(_xyparam.xlabel);
     drawYLabel(_xyparam.ylabel);
-    int16_t x[]={10,3,8};
-    int16_t y[]={10,3,8};
     
-    plot(x,y,3,RED);
+    plot(0,0,RED);
+    
+
     //plot(x,y,3,BLUE);
-    scatter(50,50,RED);
+    //scatter(50,50,RED);
+    
 }
 
 void Graph::xlim(const int16_t left,const int16_t right){
@@ -55,7 +56,7 @@ void Graph::ylim(const int16_t top,const int16_t bottom){
     _xyparam.ylim_bottom = bottom;
 }
 
-void Graph::plot(const int16_t x,const int16_t y,const int16_t color,const String &legend_name){ 
+void Graph::plot(const int x,const int y,const int16_t color,const String &legend_name){ 
     auto xunit_pixel_par_data = (float)abs(_gframe.right-_gframe.left)/abs(_xyparam.xlim_right-_xyparam.xlim_left);
     auto yunit_pixel_par_data = (float)abs(_gframe.top-_gframe.bottom)/abs(_xyparam.ylim_top-_xyparam.ylim_bottom);
     
@@ -113,7 +114,7 @@ void Graph::scatter(const int16_t x[],const int16_t y[],const uint16_t xy_bufsiz
     }
 }
 
-void Graph::scatter(const int16_t x,const int16_t y,const int16_t color,const String &legend_name){
+void Graph::scatter(const int x,const int y,const int16_t color,const String &legend_name){
     if(x<_xyparam.xlim_left||_xyparam.xlim_right<x||
        y<_xyparam.ylim_bottom||_xyparam.ylim_top<y) return;
 
