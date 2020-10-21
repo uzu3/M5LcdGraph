@@ -1,3 +1,3 @@
 # M5LcdGraph
 now developing...
-This version only seport int16_t
+This version only suport int16_t
