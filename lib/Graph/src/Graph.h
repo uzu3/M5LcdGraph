@@ -5,7 +5,7 @@
 #include<Arduino.h>
 #include<map>
 struct GridParam{
-  uint8_t linewidth;
+  uint8_t line_width;
   uint16_t xticks;
   uint16_t yticks;
   uint16_t back_ground_color;
@@ -36,6 +36,7 @@ class Graph{
     int16_t before_x;
     int16_t before_y;
     String name;
+    uint8_t width;
     static uint8_t maxid;
   };
 
@@ -56,7 +57,8 @@ class Graph{
 
   void drawLegendScatter(const uint16_t color);
   void drawLegendPlot(const uint16_t color);
-  
+  void drawLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t color,uint8_t linewidth=1);
+
   public:
   Graph(GraphXYParam gxyp,GraphFrame gf);
   Graph(const String &title="no title",
@@ -72,11 +74,11 @@ class Graph{
   
   ~Graph()=default;
 
-  void plot(const int16_t x[],const int16_t y[],const uint16_t xy_bufsize,const int16_t color=RED,const String &legend_name="no name");
-  void plot(const int x,const int y,const int16_t color=RED,const String &legend_name="no name");
+  void plot(const int16_t x[],const int16_t y[],const uint16_t xy_bufsize,const int16_t color=RED,const String &legend_name="no name",const uint8_t linewidth=1);
+  void plot(const int x,const int y,const int16_t color=RED,const String &legend_name="no name",const uint8_t linewidth=1);
   
-  void scatter(const int16_t x[],const int16_t y[],const uint16_t xy_bufsize,const int16_t color=RED,const String &legend_name="no name");
-  void scatter(const int x,const int y,const int16_t color=RED,const String &legend_name="no name");
+  void scatter(const int16_t x[],const int16_t y[],const uint16_t xy_bufsize,const int16_t color=RED,const String &legend_name="no name",const uint8_t radius=2);
+  void scatter(const int x,const int y,const int16_t color=RED,const String &legend_name="no name",const uint8_t radius=2);
   
 };
 
