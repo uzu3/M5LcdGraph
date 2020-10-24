@@ -6,7 +6,17 @@
 
 uint8_t Graph::Legend::maxid = 0;
 
-Graph::Graph(const String &title,const int16_t xlim_left,const int16_t xlim_right,const int16_t ylim_top,const int16_t ylim_bottom,const uint16_t xticks,const uint16_t yticks,bool write_grid,bool wirte_ticks){
+Graph::Graph(const String &title, 
+             const int16_t xlim_left, 
+             const int16_t xlim_right, 
+             const int16_t ylim_top, 
+             const int16_t ylim_bottom, 
+             const uint16_t xticks, 
+             const uint16_t yticks, 
+             const uint16_t grid_width, 
+             bool write_grid, 
+             bool wirte_ticks
+             ){ 
     
     _xyparam.title = title;
     
@@ -20,7 +30,7 @@ Graph::Graph(const String &title,const int16_t xlim_left,const int16_t xlim_righ
     _grid.yticks = yticks;
     _grid.back_ground_color = BLACK;
     _grid.grid_color = WHITE;
-    _grid.line_width = 1;
+    _grid.line_width = grid_width;
 
     _xyparam.ylabel = "no ylabel";
     
@@ -48,27 +58,27 @@ void Graph::drawLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, uint32_t co
     if(linewidth==1){
         M5.Lcd.drawLine(x0,y0,x1,y1,color);
     }else if(y0==y1){
-        const uint16_t yb = y0-linewidth;
-        const uint16_t yt = y0+linewidth;
+        const int16_t yt = max(0,y0-linewidth/2);
+        const int16_t yb = y0+(linewidth+1)/2;
         M5.Lcd.fillTriangle(x0,yt,x0,yb,x1,yt,color);
         M5.Lcd.fillTriangle(x0,yb,x1,yb,x1,yt,color);
     }else if(x0==x1){
-        const uint16_t xl = x0-linewidth;
-        const uint16_t xr = x0+linewidth;
+        const int16_t xl = x0-linewidth/2;
+        const int16_t xr = x0+(linewidth+1)/2;
         M5.Lcd.fillTriangle(xl,y0,xr,y0,xl,y1,color);
         M5.Lcd.fillTriangle(xl,y1,xr,y1,xr,y0,color);
     }else{
         const auto theta = atan2(y0-y1,x0-x1);
         const auto thetaR = theta+PI;
         const auto dist = sqrt((x0-x1)*(x0-x1)+(y0-y1)*(y0-y1));
-        const uint16_t x11 = dist*cos(thetaR)-linewidth*sin(thetaR) + x0;
-        const uint16_t y11 = dist*sin(thetaR)+linewidth*cos(thetaR) + y0;
-        const uint16_t x12 = dist*cos(thetaR)+linewidth*sin(thetaR) + x0;
-        const uint16_t y12 = dist*sin(thetaR)-linewidth*cos(thetaR) + y0;
-        const uint16_t x01 = dist*cos(theta)-linewidth*sin(theta) + x1;
-        const uint16_t y01 = dist*sin(theta)+linewidth*cos(theta) + y1;
-        const uint16_t x02 = dist*cos(theta)+linewidth*sin(theta) + x1;
-        const uint16_t y02 = dist*sin(theta)-linewidth*cos(theta) + y1;
+        const int16_t x11 = dist*cos(thetaR)-sin(thetaR)*(linewidth+1)/2 + x0;
+        const int16_t y11 = dist*sin(thetaR)+cos(thetaR)*(linewidth+1)/2 + y0;
+        const int16_t x12 = dist*cos(thetaR)+sin(thetaR)*linewidth/2 + x0;
+        const int16_t y12 = dist*sin(thetaR)-cos(thetaR)*linewidth/2 + y0;
+        const int16_t x01 = dist*cos(theta)-sin(theta)*(linewidth+1)/2 + x1;
+        const int16_t y01 = dist*sin(theta)+cos(theta)*(linewidth+1)/2 + y1;
+        const int16_t x02 = dist*cos(theta)+sin(theta)*linewidth/2 + x1;
+        const int16_t y02 = dist*sin(theta)-cos(theta)*linewidth/2 + y1;
         M5.Lcd.fillTriangle(x01,y01,x11,y11,x12,y12,color);
         M5.Lcd.fillTriangle(x01,y01,x02,y02,x11,y11,color);
     }
@@ -197,12 +207,12 @@ void Graph::drawXFrame(const uint8_t mode){
         }
 
         if(TICKS>>1){
-            M5.Lcd.drawString(String(x),xpos,_gframe.bottom+1);    
+            M5.Lcd.drawString(String(x),xpos,_gframe.bottom+_grid.line_width);    
         }
         x += xticks;     
     }
 
-    if(TICKS>>1) M5.Lcd.drawString(String(xlimr),_gframe.right,_gframe.bottom+1);
+    if(TICKS>>1) M5.Lcd.drawString(String(xlimr),_gframe.right,_gframe.bottom+_grid.line_width);
 }
 
 void Graph::drawYFrame(const uint8_t mode){

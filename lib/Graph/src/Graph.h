@@ -23,10 +23,10 @@ struct GraphXYParam{
 };
 
 struct GraphFrame{
-  const uint16_t left = 40;
-  const uint16_t right = 300;
-  const uint16_t bottom = 200;
-  const uint16_t top = 0;
+  uint16_t left = 40;
+  uint16_t right = 300;
+  uint16_t bottom = 200;
+  uint16_t top = 0;
 };
 
 class Graph{
@@ -68,6 +68,7 @@ class Graph{
         const int16_t ylim_bottom=0,
         const uint16_t xticks=10,
         const uint16_t yticks=10,
+        const uint16_t grid_width = 1,
         bool write_grid=true,
         bool wirte_ticks=true
         );
