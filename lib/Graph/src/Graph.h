@@ -10,6 +10,7 @@ struct GridParam{
   uint16_t yticks;
   uint16_t back_ground_color;
   uint16_t grid_color;
+  String legend_position; //"inner" or "outer"
 };
 
 struct GraphXYParam{
@@ -23,10 +24,10 @@ struct GraphXYParam{
 };
 
 struct GraphFrame{
-  uint16_t left = 40;
-  uint16_t right = 300;
-  uint16_t bottom = 200;
-  uint16_t top = 0;
+  uint16_t left;
+  uint16_t right;
+  uint16_t bottom;
+  uint16_t top;
 };
 
 class Graph{

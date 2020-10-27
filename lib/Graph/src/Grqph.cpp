@@ -31,11 +31,22 @@ Graph::Graph(const String &title,
     _grid.back_ground_color = BLACK;
     _grid.grid_color = WHITE;
     _grid.line_width = grid_width;
+    _grid.legend_position = "outer";
 
     _xyparam.ylabel = "no ylabel";
-    
     _xyparam.xlabel = "no xlabel";
 
+    if(_grid.legend_position=="inner"){
+        _gframe.left = 40;
+        _gframe.right = 300;
+        _gframe.bottom = 200;
+        _gframe.top = 0;
+    }else if(_grid.legend_position=="outer"){
+        _gframe.left = 40;
+        _gframe.right = 260;
+        _gframe.bottom = 200;
+        _gframe.top = 0;
+    }
 
     drawFrame();
     if(write_grid&&wirte_ticks){
@@ -265,7 +276,13 @@ void Graph::drawYLabel(const String& ylabel){
 
 void Graph::drawLegendScatter(const uint16_t color){
     M5.Lcd.setTextColor(color);
-    const auto xpos = _gframe.right-10;
+    auto xpos = 0;
+    if(_grid.legend_position=="inner"){
+        xpos=_gframe.right-10;
+    }else if(_grid.legend_position=="outer"){
+        xpos=320;
+    }
+    
     const auto ypos = _legend_scatter[color].legend_ypos;
     const auto name = _legend_scatter[color].name;
     const auto w = name.length()*8;
@@ -279,7 +296,12 @@ void Graph::drawLegendScatter(const uint16_t color){
 
 void Graph::drawLegendPlot(const uint16_t color){
     M5.Lcd.setTextColor(color);
-    const auto xpos = _gframe.right-10;
+    auto xpos = 0;
+    if(_grid.legend_position=="inner"){
+        xpos=_gframe.right-10;
+    }else if(_grid.legend_position=="outer"){
+        xpos=320;
+    }
     const auto ypos = _legend_plot[color].legend_ypos;
     const auto name = _legend_plot[color].name;
     const auto w = name.length()*8;
